@@ -1,3 +1,8 @@
+import random
+
+from node import Node
+from edge import Edge
+
 class Graph:
 
     def __init__(self, bins, items):
@@ -8,9 +13,9 @@ class Graph:
         nodes = []
 
         # Start node.
-        nodes.append(Node(-1, None))
+        nodes.append(Node(None, None))
 
-        for item in range(0, items):
+        for item in items:
             for bin in range(0, bins):
                 nodes.append(Node(bin, item))
 
@@ -28,8 +33,8 @@ class Graph:
 
         # Iterate through all nodes that are not the start or end nodes.
         next_item = 0
-        for i, node in enumerate(self.nodes[1:-1]):
-            if node.item != items-1:
+        for node in self.nodes[1:-1]:
+            if node.item != len(items):
                 next_item = node.item + 1
                 #for destination_node in self.nodes[i+1:i+bins+1]:
                 for destination_node in self.nodes:
@@ -38,28 +43,41 @@ class Graph:
                         node.edges.append(edge)
             # Bins for the last item all point to the end node.
             else:
-                edge = Edge(self.nodes[-1])
+                edge = Edge(destination=self.nodes[-1])
                 node.edges.append(edge)
+    
+    def add_pheromone(self):
+        for node in self.nodes:
+            for edge in node.edges:
+                edge.pheromone = random.random()
 
-class Node:
+    def generate_paths(self, p, num_bins):
+        paths = []
 
-    def __init__(self, bin, item):
-        self.bin = bin
-        self.item = item
-        self.edges = []
+        for _ in range(0, p):
+            path = []
+            choice = random.random()
+            cumulative = 0
 
-class Edge:
-    def __init__(self, destination, pheromone=None):
-        self.destination = destination
-        self.pheromone = 0.1 if pheromone is None else pheromone
+            for edge in self.nodes[0].edges:
+                cumulative += edge.pheromone
+                if choice <= cumulative:
+                    destination_node = edge.destination
+                    break
+            path.append(destination_node)
 
+            for _ in range(1, len(self.nodes)-num_bins-1, num_bins):
+                cumulative = 0
+                for edge in path[-1].edges:
+                    cumulative += edge.pheromone
+                    if choice <= cumulative:
+                        destination_node = edge.destination
+                        break
+                path.append(destination_node)
 
-graph = Graph(3, 5)
+            paths.append(path)
 
-for i, node in enumerate(graph.nodes):
-    print(i, node.bin, node.item)
-    if len(node.edges) > 0:
-        print('Edges:')
-        for edge in node.edges:
-            print(edge.destination.bin, edge.destination.item)
-    print(" ")
+        for path in paths:
+            for node in path:
+                print('bin: ' + str(node.bin) + ', item: ' + str(node.item) + 'kg')
+            print()
