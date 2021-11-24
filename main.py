@@ -1,5 +1,4 @@
 from graph import Graph
-import random
 
 bins = 3
 items = [1, 2, 3, 4, 5]
