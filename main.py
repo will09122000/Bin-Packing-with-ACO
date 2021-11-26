@@ -1,6 +1,6 @@
 from Bpp import Bpp
 
-bpp1 = Bpp(trials = 5,
+bpp1 = Bpp(trials = 1,
            items  = list(range(1, 501)),
            b      = 10,
            p      = [100, 10],
@@ -15,12 +15,12 @@ bpp2 = Bpp(trials = 5,
            fe     = 10000)
 
 bpp3 = Bpp(trials = 1,
-           items  = [1, 4, 9, 16, 25],
+           items  = [1, 2, 3, 4, 5],
            b      = 3,
-           p      = 5,
+           p      = 10,
            e      = 0.9,
-           fe     = 10000)
-
+           fe     = 1000)
+"""
 print('BPP 1')
 for p in bpp1.p:
     for e in bpp1.e:
@@ -30,19 +30,9 @@ print('BPP 2')
 for p in bpp2.p:
     for e in bpp2.e:
         bpp2.run_experiment(p, e)
-
-#bpp1.run_experiment(bpp1.p[0], bpp1.e[0])
-#bpp1.run_experiment(bpp1.p[0], bpp1.e[1])
-#bpp1.run_experiment(bpp1.p[1], bpp1.e[0])
-#bpp1.run_experiment(bpp1.p[1], bpp1.e[1])
-
-#bpp2.run_experiment(bpp2.p[0], bpp2.e[0])
-#bpp2.run_experiment(bpp2.p[0], bpp2.e[1])
-#bpp2.run_experiment(bpp2.p[1], bpp2.e[0])
-#bpp2.run_experiment(bpp2.p[1], bpp2.e[1])
-
+"""
 #bpp3.run_experiment(bpp3.p, bpp3.e)
-
+bpp1.run_experiment(bpp1.p[1], bpp1.e[0])
 
 #for edge in best_path:
     #print('Start: bin: ' + str(edge.start.bin) + ', item: ' + str(edge.start.item) + 'kg')

@@ -89,7 +89,9 @@ class Graph:
             if choice <= cumulative:
                 route_taken = edge
                 break
-        
+
+        #route_taken = edges[random.randint(0, len(edges)-1)]
+
         return route_taken
 
     def calculate_path_fitness(self, path):
