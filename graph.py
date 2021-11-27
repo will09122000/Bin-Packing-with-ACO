@@ -107,11 +107,11 @@ class Graph:
         for path in paths:
             fitness = self.calculate_path_fitness(path)
             for edge in path:
-                if fitness > 0:
+                # Prevents a divide by zero crash for smaller BPPs.
+                try:
                     edge.pheromone += 100 / fitness
-                else:
+                except:
                     edge.pheromone += 100
-                    #print("Found perfect solution.")
 
     def evaporate_pheromone(self, evaporation_rate):
         for node in self.nodes:
