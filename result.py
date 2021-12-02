@@ -1,6 +1,7 @@
 import numpy as np
 import statistics
 import csv
+import os
 import matplotlib.pyplot as plt
 from random import random
 
@@ -47,7 +48,19 @@ class Experiment:
         self.p = p
         self.e = e
 
-    def calc_result(self):
+    def create_directory(self):
+        """Create experiment directory if it doesn't already exist."""
+
+        parent_dir = f'Results/bpp_{self.bpp_id}'
+        new_dir = f'experiment_{self.experiment_num}'
+        path = os.path.join(parent_dir, new_dir)
+
+        try:
+            os.mkdir(path)
+        except:
+            pass
+
+    def calc_result(self, p, e):
         """
         Calculates the best, average and standard deviation of the fitness from all trials in the
         experiment.
@@ -72,6 +85,13 @@ class Experiment:
             writer.writerow(['best_fitness', best_fitness])
             writer.writerow(['avg_fitness', avg_fitness])
             writer.writerow(['stdev_fitness', stdev_fitness])
+
+        # Extra experiment data collection.
+        if self.bpp_id == 3:
+            with open('Results/bpp_3/results.csv','a') as f:
+                writer = csv.writer(f, delimiter=',')
+                writer.writerow([round(p, 2), round(e, 2), best_fitness, round(avg_fitness, 1), round(stdev_fitness, 1)])
+
 
     def plot_result(self):
         """

@@ -1,3 +1,4 @@
+from numpy import arange
 from bpp import Bpp
 
 # Bin packing problem 1.
@@ -19,17 +20,18 @@ bpp_2 = Bpp(bpp_id     = 2,
             fe         = 10000)
 
 bpp_3 = Bpp(bpp_id     = 3,
-            num_trials = 1,
-            items      = [1, 2, 3, 4, 5],
-            b          = 3,
-            p          = 10,
-            e          = 0.9,
-            fe         = 1000)
+            num_trials = 10,
+            items      = list(range(1, 251)),
+            b          = 5,
+            p          = list(range(5, 115, 5)),
+            e          = list(arange(0.05, 1, 0.05)),
+            fe         = 10000)
 
 bpps = [bpp_1, bpp_2]
 
 # Run each experiment for each bin packing problem.
 if __name__ == '__main__':
+    """
     for bpp in bpps:
         print(f'Bin Packing Problem {bpp.bpp_id}')
         experiment_num = 1
@@ -37,7 +39,10 @@ if __name__ == '__main__':
             for e in bpp.e:
                 bpp.results.append(bpp.run_experiment(experiment_num, p, e))
                 experiment_num += 1
+    """
 
-    #bpp3.run_experiment(bpp3.p, bpp3.e)
-    #bpp1.run_experiment(bpp1.p[1], bpp1.e[0])
-    #bpp_2.run_experiment(bpp_2.p[1], bpp_2.e[0])
+    experiment_num = 1
+    for p in bpp_3.p:
+        for e in bpp_3.e:
+            bpp_3.results.append(bpp_3.run_experiment(experiment_num, p, e))
+            experiment_num += 1
