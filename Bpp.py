@@ -29,7 +29,7 @@ class Bpp:
         self.p = p
         self.e = e
         self.fe = fe
-        self.results = None
+        self.results = []
 
     def run_experiment(self, experiment_num, p, e):
         """Runs a single experiment within a bin packing problem."""
@@ -61,6 +61,7 @@ class Bpp:
         # Calculate results and plot data.
         experiment.calc_result()
         experiment.plot_result()
+        experiment.display_solution(self.b, len(self.items))
 
         return experiment
 

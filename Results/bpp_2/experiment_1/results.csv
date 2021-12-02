@@ -1,3 +1,4 @@
-best_fitness,1031417
-avg_fitness,1116256.6
-stdev_fitness,63709.42372443813
+trial_fitness,1067324,1063481,1129234,998609,1064621
+best_fitness,998609
+avg_fitness,1064653.8
+stdev_fitness,46208.83125226173

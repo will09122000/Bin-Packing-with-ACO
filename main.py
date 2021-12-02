@@ -35,7 +35,7 @@ if __name__ == '__main__':
         experiment_num = 1
         for p in bpp.p:
             for e in bpp.e:
-                bpp.results = bpp.run_experiment(experiment_num, p, e)
+                bpp.results.append(bpp.run_experiment(experiment_num, p, e))
                 experiment_num += 1
 
     #bpp3.run_experiment(bpp3.p, bpp3.e)

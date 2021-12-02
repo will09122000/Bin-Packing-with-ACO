@@ -2,6 +2,7 @@ import numpy as np
 import statistics
 import csv
 import matplotlib.pyplot as plt
+from random import random
 
 class Trial:
     """
@@ -55,11 +56,19 @@ class Experiment:
         trial_fitnesses = [trial.best_fitness for trial in self.trials]
         best_fitness = min(trial_fitnesses)
         avg_fitness = sum(trial_fitnesses) / len(trial_fitnesses)
-        stdev_fitness = statistics.stdev(trial_fitnesses)
+        try:
+            stdev_fitness = statistics.stdev(trial_fitnesses)
+        except:
+            stdev_fitness = 0
 
         # Write values to a csv file.
         with open(f'Results/bpp_{self.bpp_id}/experiment_{self.experiment_num}/results.csv', 'w', newline='') as f:
             writer = csv.writer(f, delimiter=',')
+            writer.writerow(['trial_fitness', trial_fitnesses[0],
+                                              trial_fitnesses[1],
+                                              trial_fitnesses[2],
+                                              trial_fitnesses[3],
+                                              trial_fitnesses[4]])
             writer.writerow(['best_fitness', best_fitness])
             writer.writerow(['avg_fitness', avg_fitness])
             writer.writerow(['stdev_fitness', stdev_fitness])
@@ -71,7 +80,7 @@ class Experiment:
         """
 
         fig, axs = plt.subplots(len(self.trials), sharex=True, sharey=True, figsize=(10, 15))
-        fig.suptitle(f'Bin Packing Problem {self.bpp_id}, Experiment {self.experiment_num}\np = {self.p}, e = {self.e}', fontsize=24)
+        fig.suptitle(f'Bin Packing Problem {self.bpp_id}\nExperiment {self.experiment_num}: p = {self.p}, e = {self.e}\nAvg. Fitness of Colony over Time', fontsize=24)
         plt.xlabel('Fitness Evaluations', fontsize=18)
         fig.text(0.06, 0.5, 'Average Fitness of Colony', ha='center', va='center', rotation='vertical', fontsize=18)
 
@@ -82,4 +91,39 @@ class Experiment:
             y = [coord[1] for coord in trial.avg_fitness]
             axs[trial.trial_num].plot(x, y)
 
+        # Save plot as an image file.
         plt.savefig(f'Results/bpp_{self.bpp_id}/experiment_{self.experiment_num}/graph.png')
+        plt.clf()
+
+    def display_solution(self, b, num_items):
+        """Displays a bar chart of bin weights to visualise the solution of each experiment."""
+
+        # Lists of all trial fitnesses and respective paths for this experiment.
+        trial_fitnesses = [trial.best_fitness for trial in self.trials]
+        trial_paths = [trial.best_path for trial in self.trials]
+
+        # The best path and fitness for this experiment.
+        best_trial_index = trial_fitnesses.index(min(trial_fitnesses))
+        best_fitness = trial_fitnesses[best_trial_index]
+        best_path = trial_paths[best_trial_index]
+
+        # 2D list for the stacked bar chart.
+        bins = [np.array([0] * b) for _ in range(num_items)]
+        bin_labels = list(range(1, b+1))
+
+        # Add each item in the path to the correct bin.
+        for i, edge in enumerate(best_path[0:-1]):
+            bins[i][edge.destination.bin] = edge.destination.item
+
+        # Plot each a bar for each bin.
+        total = [0] * b
+        for item in bins:
+            plt.bar(bin_labels, item, bottom=total, color=(random(), random(), random()))
+            total += item
+
+        # Draw plot labels and save as an image file.
+        plt.xlabel('Bin', fontsize=18)
+        plt.ylabel('Total Weight of Items within Bin (kg)', fontsize=18)
+        plt.title(f'Bin Packing Problem {self.bpp_id}\nExperiment {self.experiment_num}: p = {self.p}, e = {self.e}\nSolution with Fitness: {best_fitness}', fontsize=24)
+        plt.savefig(f'Results/bpp_{self.bpp_id}/experiment_{self.experiment_num}/solution.png')
+        plt.clf()
