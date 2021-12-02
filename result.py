@@ -77,18 +77,18 @@ class Experiment:
         # Write values to a csv file.
         with open(f'Results/bpp_{self.bpp_id}/experiment_{self.experiment_num}/results.csv', 'w', newline='') as f:
             writer = csv.writer(f, delimiter=',')
-            writer.writerow(['trial_fitness', trial_fitnesses[0],
-                                              trial_fitnesses[1],
-                                              trial_fitnesses[2],
-                                              trial_fitnesses[3],
-                                              trial_fitnesses[4]])
+            #writer.writerow(['trial_fitness', trial_fitnesses[0],
+                                              #trial_fitnesses[1],
+                                              #trial_fitnesses[2],
+                                              #trial_fitnesses[3],
+                                              #trial_fitnesses[4]])
             writer.writerow(['best_fitness', best_fitness])
             writer.writerow(['avg_fitness', avg_fitness])
             writer.writerow(['stdev_fitness', stdev_fitness])
 
         # Extra experiment data collection.
         if self.bpp_id == 3:
-            with open('Results/bpp_3/results.csv','a') as f:
+            with open('Results/bpp_3/results.csv','a', newline='') as f:
                 writer = csv.writer(f, delimiter=',')
                 writer.writerow([round(p, 2), round(e, 2), best_fitness, round(avg_fitness, 1), round(stdev_fitness, 1)])
 
