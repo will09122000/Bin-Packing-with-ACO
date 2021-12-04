@@ -60,7 +60,7 @@ class Experiment:
         except:
             pass
 
-    def calc_result(self, p, e):
+    def calc_result(self, p, e, time):
         """
         Calculates the best, average and standard deviation of the fitness from all trials in the
         experiment.
@@ -77,11 +77,11 @@ class Experiment:
         # Write values to a csv file.
         with open(f'Results/bpp_{self.bpp_id}/experiment_{self.experiment_num}/results.csv', 'w', newline='') as f:
             writer = csv.writer(f, delimiter=',')
-            #writer.writerow(['trial_fitness', trial_fitnesses[0],
-                                              #trial_fitnesses[1],
-                                              #trial_fitnesses[2],
-                                              #trial_fitnesses[3],
-                                              #trial_fitnesses[4]])
+            writer.writerow(['trial_fitness', trial_fitnesses[0],
+                                              trial_fitnesses[1],
+                                              trial_fitnesses[2],
+                                              trial_fitnesses[3],
+                                              trial_fitnesses[4]])
             writer.writerow(['best_fitness', best_fitness])
             writer.writerow(['avg_fitness', avg_fitness])
             writer.writerow(['stdev_fitness', stdev_fitness])
@@ -91,6 +91,9 @@ class Experiment:
             with open('Results/bpp_3/results.csv','a', newline='') as f:
                 writer = csv.writer(f, delimiter=',')
                 writer.writerow([round(p, 2), round(e, 2), best_fitness, round(avg_fitness, 1), round(stdev_fitness, 1)])
+            with open('Results/bpp_3/performance.csv','a', newline='') as f:
+                writer = csv.writer(f, delimiter=',')
+                writer.writerow([round(p, 2), round(e, 2), time.seconds])
 
 
     def plot_result(self):

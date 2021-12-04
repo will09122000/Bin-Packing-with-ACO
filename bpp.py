@@ -59,10 +59,10 @@ class Bpp:
         print()
 
         # Calculate results and plot data.
-        experiment.create_directory()
-        experiment.calc_result(p, e)
-        experiment.plot_result()
-        experiment.display_solution(self.b, len(self.items))
+        #experiment.create_directory()
+        experiment.calc_result(p, e, datetime.now() - start)
+        #experiment.plot_result()
+        #experiment.display_solution(self.b, len(self.items))
 
         return experiment
 

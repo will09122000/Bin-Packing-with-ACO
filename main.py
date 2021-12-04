@@ -19,11 +19,12 @@ bpp_2 = Bpp(bpp_id     = 2,
             e          = [0.9, 0.5],
             fe         = 10000)
 
+# Further experiment.
 bpp_3 = Bpp(bpp_id     = 3,
             num_trials = 10,
             items      = list(range(1, 251)),
             b          = 5,
-            p          = [1, 2, 3, 4] + list(range(5, 115, 5)),
+            p          = list(range(5, 115, 5)),
             e          = list(arange(0.05, 1.05, 0.05)),
             fe         = 10000)
 
@@ -31,7 +32,6 @@ bpps = [bpp_1, bpp_2]
 
 # Run each experiment for each bin packing problem.
 if __name__ == '__main__':
-    """
     for bpp in bpps:
         print(f'Bin Packing Problem {bpp.bpp_id}')
         experiment_num = 1
@@ -39,10 +39,12 @@ if __name__ == '__main__':
             for e in bpp.e:
                 bpp.results.append(bpp.run_experiment(experiment_num, p, e))
                 experiment_num += 1
-    """
 
+    # Further Experiment.
+    """
     experiment_num = 1
     for p in bpp_3.p:
         for e in bpp_3.e:
             bpp_3.results.append(bpp_3.run_experiment(experiment_num, p, e))
             experiment_num += 1
+    """
