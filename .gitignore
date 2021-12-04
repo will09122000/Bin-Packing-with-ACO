@@ -2,3 +2,4 @@ __pycache__/node.cpython-39.pyc
 __pycache__/graph.cpython-39.pyc
 __pycache__/edge.cpython-39.pyc
 *.pyc
+Results/.DS_Store
