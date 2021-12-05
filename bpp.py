@@ -54,18 +54,20 @@ class Bpp:
         # Add trials to experiment object for data collection.
         experiment.trials.extend(trials)
 
+        # Calculate time taken and memory used.
         average_timedelta = sum(times, timedelta()) / len(times)
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+
         print(f'Average path gen time: {average_timedelta}')
         print(f'Total time: {datetime.now() - start}')
-        current, peak = tracemalloc.get_traced_memory()
-        print(f'Current memory usage is {current / 10**6}MB; Peak was {peak / 10**6}MB')
-        tracemalloc.stop()
+        print(f'Current memory: {current / 10**6}MB, Peak memory: {peak / 10**6}MB')
         print()
 
         # Calculate results and plot data.
         # Commented out to keep the results in the directory consistent with the results in the report.
         #experiment.create_directory()
-        #experiment.calc_result(p, e, datetime.now() - start)
+        #experiment.calc_result(p, e, datetime.now() - start, current / 10**6, peak / 10**6)
         #experiment.plot_result()
         #experiment.display_solution(self.b, len(self.items))
 

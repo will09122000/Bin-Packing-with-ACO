@@ -24,7 +24,7 @@ bpp_3 = Bpp(bpp_id     = 3,
             num_trials = 10,
             items      = list(range(1, 251)),
             b          = 5,
-            p          = list(range(5, 115, 5)),
+            p          = [1, 2, 3, 4] + list(range(5, 115, 5)),
             e          = list(arange(0.05, 1.05, 0.05)),
             fe         = 10000)
 

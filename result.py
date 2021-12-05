@@ -60,7 +60,7 @@ class Experiment:
         except:
             pass
 
-    def calc_result(self, p, e, time):
+    def calc_result(self, p, e, time, current_memory, peak_memory):
         """
         Calculates the best, average and standard deviation of the fitness from all trials in the
         experiment.
@@ -94,7 +94,9 @@ class Experiment:
             with open('Results/bpp_3/performance.csv','a', newline='') as f:
                 writer = csv.writer(f, delimiter=',')
                 writer.writerow([round(p, 2), round(e, 2), time.seconds])
-
+            with open('Results/bpp_3/space.csv','a', newline='') as f:
+                writer = csv.writer(f, delimiter=',')
+                writer.writerow([round(p, 2), current_memory, peak_memory])
 
     def plot_result(self):
         """
