@@ -34,32 +34,35 @@ class Bpp:
 
     def run_experiment(self, experiment_num, p, e):
         """Runs a single experiment within a bin packing problem."""
+
+        # Start memory usage tracking.
         tracemalloc.start()
+
+        trials = []
+
         print(f'Experiment {experiment_num}: p = {p}, e = {e}')
 
         # Create the graph object for ants to navigate.
         self.graph = Graph(self.b, self.items)
+
         # Create the experiment object used for data collection.
         experiment = Experiment(self.bpp_id, experiment_num, p, e)
 
-        trials = []
-        times = []
+        # Record the start time to be able to know how long the experiment took.
         start = datetime.now()
 
         # Repeat for the number of trials in the experiment.
         for i in range(0, self.num_trials):
             trials.append(Trial(self.bpp_id, experiment_num, i))
-            self.run_trial(p, e, trials, i, times)
+            self.run_trial(p, e, trials, i)
 
         # Add trials to experiment object for data collection.
         experiment.trials.extend(trials)
 
-        # Calculate time taken and memory used.
-        average_timedelta = sum(times, timedelta()) / len(times)
+        # Calculate memory used.
         current, peak = tracemalloc.get_traced_memory()
         tracemalloc.stop()
 
-        print(f'Average path gen time: {average_timedelta}')
         print(f'Total time: {datetime.now() - start}')
         print(f'Current memory: {current / 10**6}MB, Peak memory: {peak / 10**6}MB')
         print()
@@ -73,10 +76,11 @@ class Bpp:
 
         return experiment
 
-    def run_trial(self, p, e, trials, i, times):
+    def run_trial(self, p, e, trials, i):
         """Runs a single ACO trial for an experiment within a specific bin packing problem."""
 
         # Add the initial random pheromone to each edge in the graph.
+        # This is performed here so each trial has a different initial pheromone layout.
         self.graph.add_pheromone()
 
         current_evaluations = 0
@@ -85,7 +89,6 @@ class Bpp:
 
             # Generate a path for each ant in the colony.
             paths, time = self.graph.generate_paths(p, self.b)
-            times.append(time)
 
             # Update the pheromone for each edge on the graph determined by the fitness of each
             # ant's path.
