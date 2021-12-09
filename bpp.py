@@ -84,6 +84,7 @@ class Bpp:
         self.graph.add_pheromone()
 
         current_evaluations = 0
+
         # Repeat until the number of fitness evaluations (10,000) has been reached.
         while current_evaluations < self.fe:
 

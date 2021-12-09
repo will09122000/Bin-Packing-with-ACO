@@ -25,6 +25,7 @@ class Graph:
 
     def create_nodes(self, b, items):
         """Creates all nodes required for the graph."""
+
         nodes = []
 
         # Start node.
