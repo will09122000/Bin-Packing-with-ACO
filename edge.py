@@ -20,6 +20,7 @@ class Edge:
         """Assign a random pheromone level from 0 to 1."""
 
         self.pheromone = random.random()
+        #self.pheromone = 0.5
 
     def evaporate_pheromone(self, evaporation_rate):
         """Evaporate the pheromone by the evaporation rate (e)."""

@@ -147,7 +147,7 @@ class Graph:
             for edge in path:
                 # Prevents a divide by zero error for smaller BPPs when testing.
                 try:
-                    edge.pheromone += 100 / fitness
+                    edge.pheromone += (100 / fitness)
                 except:
                     edge.pheromone += 100
 

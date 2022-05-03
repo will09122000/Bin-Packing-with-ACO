@@ -1,6 +1,8 @@
 from datetime import timedelta, datetime
 import tracemalloc
 
+from numpy.core.defchararray import index
+
 from graph import Graph
 from result import Trial, Experiment
 
@@ -90,6 +92,15 @@ class Bpp:
 
             # Generate a path for each ant in the colony.
             paths, time = self.graph.generate_paths(p, self.b)
+
+            #for node in self.graph.nodes:
+                #for edge in node.edges:
+                    #print(f'{edge.destination.item} {edge.destination.bin} {edge.pheromone}')
+            #print()
+            #for path in paths:
+                #for edge in path:
+                    #print(f'{edge.start.bin} --> {edge.destination.bin}, item: {edge.destination.item}')
+                #print()
 
             # Update the pheromone for each edge on the graph determined by the fitness of each
             # ant's path.
